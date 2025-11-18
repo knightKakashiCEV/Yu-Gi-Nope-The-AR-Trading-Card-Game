@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="pikmin_coup" size="694.000000 1013.000000" />
+    <ImageTarget name="jinzo" size="694.000000 1013.000000" />
+    <ImageTarget name="dark_magician" size="694.000000 1013.000000" />
+    <ImageTarget name="blue_eyes_white_dragon" size="694.000000 1013.000000" />
+  </Tracking>
+</QCARConfig>
