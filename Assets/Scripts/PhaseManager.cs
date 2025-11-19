@@ -102,8 +102,20 @@ public class PhaseManager : MonoBehaviour
         currentPhase = Phase.Draw;
         UpdateButtons();
 
+        // Reset flags de los monstruos
+        ResetAllMonstersTurnFlags();
+
         // Start the Draw phase countdown
         phaseCoroutine = StartCoroutine(DrawPhaseCountdown());
+    }
+
+    void ResetAllMonstersTurnFlags()
+    {
+        MonsterCard[] monsters = Object.FindObjectsByType<MonsterCard>(FindObjectsSortMode.None);
+        foreach (MonsterCard m in monsters)
+        {
+            m.ResetTurnFlags();
+        }
     }
 
     // Handles the countdown for the Draw phase

@@ -7,7 +7,7 @@ public class Defense : MonoBehaviour
     public void SetSelected(MonsterCard m)
     {
         selected = m;
-        gameObject.SetActive(true);
+        gameObject.SetActive(true);   // Mostrar panel del botón Defensa
     }
 
     public void PressDefense()

@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Folder : MonoBehaviour
+public class Select : MonoBehaviour
 {
-    Defense defenseButton;
-    PhaseManager phaseManager;
-    BattlePhase battlePhase;
+    [SerializeField] Defense defenseButton;
+    [SerializeField] PhaseManager phaseManager;
+    [SerializeField] BattlePhase battlePhase;
 
     void Update()
     {
@@ -15,17 +15,19 @@ public class Folder : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 MonsterCard m = hit.collider.GetComponent<MonsterCard>();
+                if (m == null) return;
 
-                if (m != null)
+                // MAIN PHASE → cambiar a defensa (solo una vez por turno)
+                if (phaseManager != null && phaseManager.IsMainPhase())
                 {
-                    if (phaseManager.IsMainPhase())
-                    {
+                    if (m.CanChangePosition())
                         defenseButton.SetSelected(m);
-                    }
-                    else if (phaseManager.IsBattlePhase())
-                    {
-
-                    }
+                }
+                // BATTLE PHASE → seleccionar atacante / defensor
+                else if (phaseManager != null && phaseManager.IsBattlePhase())
+                {
+                    if (battlePhase != null)
+                        battlePhase.SelectForBattle(m);
                 }
             }
         }
