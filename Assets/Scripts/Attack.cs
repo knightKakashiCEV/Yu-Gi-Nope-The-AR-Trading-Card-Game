@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 
-public class Defense : MonoBehaviour
+public class Attack : MonoBehaviour
 {
+    [SerializeField] BattlePhase battlePhase;
+
     MonsterCard selected;
 
-    // Called from Select.cs when you click a monster in Main Phase
     public void SetSelected(MonsterCard m)
     {
-        // If we click the same monster again and the panel is open → close it
+        // Re-click same monster → close panel
         if (gameObject.activeSelf && selected == m)
         {
-            Hide();
+            Cancel();
             return;
         }
 
@@ -18,15 +19,17 @@ public class Defense : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void PressDefense()
+    public void PressAttack()
     {
-        if (selected != null)
-            selected.ToggleDefense();
+        if (selected != null && battlePhase != null)
+        {
+            battlePhase.SetAttacker(selected);
+        }
 
-        Hide();
+        Cancel();
     }
 
-    public void Hide()
+    public void Cancel()
     {
         selected = null;
         gameObject.SetActive(false);

@@ -14,6 +14,10 @@ public enum Phase
 
 public class PhaseManager : MonoBehaviour
 {
+    [SerializeField] Defense defensePanel;
+    [SerializeField] Attack attackPanel;
+    [SerializeField] BattlePhase battlePhase;
+
     [Header("UI References")]
     public Button[] phaseButtons;          // Buttons representing each phase
 
@@ -29,6 +33,7 @@ public class PhaseManager : MonoBehaviour
 
     private void Start()
     {
+        ClearSelections();
         UpdateButtons();
         phaseCoroutine = StartCoroutine(DrawPhaseCountdown());
     }
@@ -47,6 +52,7 @@ public class PhaseManager : MonoBehaviour
         int nextPhaseIndex = ((int)currentPhase + 1) % System.Enum.GetValues(typeof(Phase)).Length;
         currentPhase = (Phase)nextPhaseIndex;
 
+        ClearSelections();
         UpdateButtons();
 
         // Start countdowns for specific phases
@@ -59,6 +65,8 @@ public class PhaseManager : MonoBehaviour
                 phaseCoroutine = StartCoroutine(StandbyPhaseCountdown());
                 break;
         }
+
+
     }
 
     public bool IsMainPhase()
@@ -100,6 +108,7 @@ public class PhaseManager : MonoBehaviour
 
         // Reset to Draw phase for the new player
         currentPhase = Phase.Draw;
+        ClearSelections();
         UpdateButtons();
 
         // Reset flags de los monstruos
@@ -140,4 +149,17 @@ public class PhaseManager : MonoBehaviour
         Debug.Log($"Standby Phase ended automatically for Player {currentPlayer}");
         NextPhase();
     }
+
+    private void ClearSelections()
+    {
+        if (defensePanel != null)
+            defensePanel.Hide();
+
+        if (attackPanel != null)
+            attackPanel.Cancel();
+
+        if (battlePhase != null)
+            battlePhase.ClearAttacker();
+    }
+
 }

@@ -4,29 +4,38 @@ public class BattlePhase : MonoBehaviour
 {
     MonsterCard attacker;
 
-    public void SelectForBattle(MonsterCard m)
+    public void SetAttacker(MonsterCard m)
     {
-        if (m == null || !m.IsOnField())
-            return;
+        if (m == null) return;
+        if (!m.IsOnField() || !m.CanBeAttacker()) return;
 
-        // 1er clic: elegir atacante
-        if (attacker == null)
+        attacker = m;
+        Debug.Log($"Attacker set: {m.name}");
+    }
+
+    public bool HasAttacker()
+    {
+        return attacker != null;
+    }
+
+    public void SelectTarget(MonsterCard target)
+    {
+        if (attacker == null) return;
+        if (target == null || !target.IsOnField()) return;
+        if (target == attacker) return;
+
+        // Rotar el atacante hacia el objetivo
+        Vector3 lookDir = target.transform.position - attacker.transform.position;
+        lookDir.y = 0f;
+        if (lookDir != Vector3.zero)
         {
-            if (m.CanBeAttacker())
-            {
-                attacker = m;
-                Debug.Log($"Attacker selected: {m.name}");
-            }
-            return;
+            Quaternion targetRot = Quaternion.LookRotation(lookDir);
+            attacker.transform.rotation = targetRot;
         }
 
-        // 2º clic: elegir objetivo y resolver batalla
-        if (m != attacker)
-        {
-            ResolveBattle(attacker, m);
-            attacker.MarkAsAttacked();
-            attacker = null;
-        }
+        ResolveBattle(attacker, target);
+        attacker.MarkAsAttacked();
+        attacker = null;
     }
 
     void ResolveBattle(MonsterCard a, MonsterCard d)
