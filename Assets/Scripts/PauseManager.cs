@@ -15,7 +15,11 @@ public class PauseManager : MonoBehaviour
     }
 
     // Pauses the game and shows the pause menu
-    public void PauseGame() => SetPauseState(true);
+    public void PauseGame()
+    {
+        SetPauseState(true);
+        AdManager.instance.ShowAd();
+    }
 
     // Resumes the game and hides the pause menu
     public void ResumeGame() => SetPauseState(false);
@@ -23,6 +27,7 @@ public class PauseManager : MonoBehaviour
     // Sets the pause state of the game
     private void SetPauseState(bool pause)
     {
+        AdManager.instance.ShowAd();
         isPaused = pause;
         Time.timeScale = pause ? 0f : 1f; // Stop or resume game time
         if (pauseMenuPanel != null)
