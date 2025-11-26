@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class AdManager : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitializationListener
+public class AdManager : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener, IUnityAdsInitializationListener
 {
     public static AdManager instance;
     [SerializeField] private string android_ID;
     [SerializeField] private string iOS_ID;
     [SerializeField] private bool testMode;
+    private string placementID = "Interstitial_";
 
     private void Awake()
     {
@@ -24,14 +25,17 @@ public class AdManager : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitiali
     {
 #if UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE_WIN
     Advertisement.Initialize(android_ID, testMode, this);
+    placementID += "Android";
 #elif UNITY_IOS
     Advertisement.Initialize(iOS_ID, testMode, this);
+    placementID += "iOS";
 #endif
     }
 
     public void ShowAd()
     {
-        Advertisement.Show("Interstitial");
+        Advertisement.Load(placementID, this);
+        
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
@@ -60,6 +64,17 @@ public class AdManager : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitiali
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnUnityAdsAdLoaded(string placementId)
+    {
+        Advertisement.Show(    public void OnUnityAdsAdLoaded(string placementId)
+, this);
+    }
+
+    public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
         throw new System.NotImplementedException();
     }
