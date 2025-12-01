@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: afa4a3c10ae4623488a428ac9790e758
+  productGUID: 78f8d7a4c67befd4daf7d06ab1c49d63
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -880,7 +880,7 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: VUFORIA_ANDROID_SETTINGS
+    Android: VUFORIA_ANDROID_SETTINGS;LEVELPLAY_DEPENDENCIES_INSTALLED
     Standalone: LEVELPLAY_DEPENDENCIES_INSTALLED
     Windows Store Apps: VUFORIA_WSA_SETTINGS
     iPhone: VUFORIA_IOS_SETTINGS
@@ -927,14 +927,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 2
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Oh-Yu-Gi-Trading-Card-Game-AR-
+  metroPackageName: Yu-Gi-Nope-The-AR-Trading-Card-Game
   metroPackageVersion: 11.4.4.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Vuforia
   metroCertificateIssuer: Vuforia
   metroCertificateNotAfter: 80a428773e1cd501
-  metroApplicationDescription: Oh-Yu-Gi-Trading-Card-Game-AR-
+  metroApplicationDescription: Yu-Gi-Nope-The-AR-Trading-Card-Game
   wsaImages:
     65636: Assets/Common/Icons/UWP/StoreLogo.scale-100.png
     65661: Assets/Common/Icons/UWP/StoreLogo.scale-125.png
@@ -1057,8 +1057,7 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled:
-    Unity Ads: 0
+  cloudServicesEnabled: {}
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -1083,7 +1082,7 @@ PlayerSettings:
   cloudProjectId: 58c6d8e9-813d-4374-af13-eb6b2f2dd38b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Yu-Gi-Nope-The-AR-Trading-Card-Game
+  projectName: 
   organizationId: estrella_soto
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1

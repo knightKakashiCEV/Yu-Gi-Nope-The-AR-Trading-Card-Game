@@ -99,3 +99,5 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 /[Pp]ackages/com.ptc.vuforia.engine-11.4.4.tgz
+Assets/Editor/Migration/com.ptc.vuforia.engine-11.4.4.tgz
+Assets/Editor/Migration/com.ptc.vuforia.engine-11.4.4.tgz.meta
