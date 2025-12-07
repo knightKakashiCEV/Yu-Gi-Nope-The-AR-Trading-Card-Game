@@ -31,7 +31,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: MageAttack
+      name: Attack
       takeName: Armature|MageAttack
       internalID: 6490285443496287538
       firstFrame: 0
@@ -60,7 +60,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: MageDefend
+      name: Defend
       takeName: Armature|MageDefend
       internalID: 616012452168365512
       firstFrame: 0
@@ -89,7 +89,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: MageDie
+      name: Die
       takeName: Armature|MageDie
       internalID: -5582004010362548658
       firstFrame: 0
@@ -118,7 +118,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: MageIdle
+      name: Idle
       takeName: Armature|MageIdle
       internalID: -8344971271247223534
       firstFrame: 0

@@ -11,6 +11,7 @@ public class MonsterCard : MonoBehaviour
 
     bool hasChangedPositionThisTurn;
     bool hasAttackedThisTurn;
+    Animator animator;
 
     void Start()
     {
@@ -19,6 +20,23 @@ public class MonsterCard : MonoBehaviour
         isInDefense = false;
         hasChangedPositionThisTurn = false;
         hasAttackedThisTurn = false;
+        animator = GetComponent<Animator>();
+    }
+    public void Idle() 
+    { 
+        animator.SetBool("Idle", true); 
+    }
+    public void Attack() 
+    { 
+        animator.SetBool("Attack", true); 
+    }
+    public void Defend() 
+    { 
+        animator.SetBool("Defense", true); 
+    }
+    public void Die() 
+    { 
+        animator.SetBool("Dead", true); 
     }
 
     public void SetOnField(bool active)

@@ -37,12 +37,15 @@ public class BattlePhase : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(lookDir);
             attacker.transform.rotation = targetRot;
         }
+        attacker.Attack();
 
         ResolveBattle(attacker, target);
+
+        attacker.Idle();
         attacker.MarkAsAttacked();
         attacker = null;
 
-        Animation anim = attacker.GetComponent<Animation>();
+
     }
 
     // Resolution of the battle, who wins and loses
@@ -52,20 +55,25 @@ public class BattlePhase : MonoBehaviour
         bool defenderInDefense = d.IsDefense();
         int atkD = d.AttackPoints();
         int defVal = defenderInDefense ? d.DefensePoints() : atkD;
+        
 
         // ATK vs DEF → destruction only
         if (defenderInDefense)
         {
             if (atkA > defVal)
             {
+                d.Die();
                 d.SetOnField(false);
             }
             else if (atkA < defVal)
             {
+                a.Die();
                 a.SetOnField(false);
             }
             else
             {
+                a.Die();
+                d.Die();
                 a.SetOnField(false);
                 d.SetOnField(false);
             }
@@ -76,6 +84,7 @@ public class BattlePhase : MonoBehaviour
         // ATK vs ATK → descrution + damage to the Opponent's LP
         if (atkA > atkD)
         {
+            d.Die();
             d.SetOnField(false);
 
             int damage = atkA - atkD;
@@ -84,6 +93,7 @@ public class BattlePhase : MonoBehaviour
         }
         else if (atkA < atkD)
         {
+            a.Die();
             a.SetOnField(false);
 
             int damage = atkD - atkA;
@@ -92,6 +102,8 @@ public class BattlePhase : MonoBehaviour
         }
         else
         {
+            d.Die();
+            a.Die();
             a.SetOnField(false);
             d.SetOnField(false);
         }

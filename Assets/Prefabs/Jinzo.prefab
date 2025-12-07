@@ -71,6 +71,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1005688013321171688}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0eb05c9781b62e5449d8ac077c1437bc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6683231340175388574}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0eb05c9781b62e5449d8ac077c1437bc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4203497793925733136}
   m_SourcePrefab: {fileID: 100100000, guid: 0eb05c9781b62e5449d8ac077c1437bc, type: 3}
 --- !u!1 &4685858010801457668 stripped
 GameObject:
@@ -88,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 4685858010801457668}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b360c2e4bd640241b63f262582892f4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -100,3 +108,39 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &6683231340175388574
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685858010801457668}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.08665782, y: 0.18912795, z: 0.07040632}
+  m_Center: {x: -0.004875511, y: 0.08536361, z: -0.0032503307}
+--- !u!114 &4203497793925733136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685858010801457668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902ebbe81a191e84fbb7e339bab2a562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterCard
+  monsterName: Jinzo
+  attackPoints: 2400
+  defensePoints: 1500
