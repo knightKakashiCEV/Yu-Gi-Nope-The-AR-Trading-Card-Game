@@ -41,6 +41,8 @@ public class BattlePhase : MonoBehaviour
         ResolveBattle(attacker, target);
         attacker.MarkAsAttacked();
         attacker = null;
+
+        Animation anim = attacker.GetComponent<Animation>();
     }
 
     // Resolution of the battle, who wins and loses
