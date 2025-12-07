@@ -31,6 +31,10 @@ public class PhaseManager : MonoBehaviour
 
     private Coroutine phaseCoroutine;       // Reference to the active phase coroutine
 
+    //Getters
+    public Phase CurrentPhase => currentPhase;
+    public int CurrentPlayer => currentPlayer;
+
     private void Start()
     {
         ClearSelections();
@@ -69,11 +73,14 @@ public class PhaseManager : MonoBehaviour
 
     }
 
+
+    // Check if it's the main phase
     public bool IsMainPhase()
     {
         return currentPhase == Phase.Main1 || currentPhase == Phase.Main2;
     }
 
+    // Check if it's the battle phase
     public bool IsBattlePhase()
     {
         return currentPhase == Phase.Battle;
@@ -118,6 +125,7 @@ public class PhaseManager : MonoBehaviour
         phaseCoroutine = StartCoroutine(DrawPhaseCountdown());
     }
 
+    // Rset turn flags
     void ResetAllMonstersTurnFlags()
     {
         MonsterCard[] monsters = Object.FindObjectsByType<MonsterCard>(FindObjectsSortMode.None);
@@ -150,6 +158,7 @@ public class PhaseManager : MonoBehaviour
         NextPhase();
     }
 
+    // Hide all Panels and clear the attacker
     private void ClearSelections()
     {
         if (defensePanel != null)
