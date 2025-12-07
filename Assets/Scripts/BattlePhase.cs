@@ -39,7 +39,7 @@ public class BattlePhase : MonoBehaviour
     }
 
     void ResolveBattle(MonsterCard a, MonsterCard d)
-    {
+    { 
         int atk = a.AttackPoints();
         int defVal = d.IsDefense() ? d.DefensePoints() : d.AttackPoints();
 
