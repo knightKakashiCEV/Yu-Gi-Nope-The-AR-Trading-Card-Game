@@ -93,10 +93,9 @@ public class MonsterCard : MonoBehaviour
 
         if (isInDefense)
         {
-            transform.rotation = Quaternion.Euler(0f, 0f, 90f);
             if (animator != null)
             {
-                animator.SetBool("Defense", true);
+                animator.SetBool("Defend", true);
                 animator.SetBool("Idle", false);
             }
         }
