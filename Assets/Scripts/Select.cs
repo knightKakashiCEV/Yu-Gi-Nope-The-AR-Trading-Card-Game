@@ -17,9 +17,32 @@ public class Select : MonoBehaviour
 
     void Update()
     {
-        // click or tap
+
+#if UNITY_ANDROID || Unity_IOS
+
+        if(Input.touchCount == 0) return;
+
+        Touch touch = Input.GetTouch(0);
+        if (touch.phase != TouchPhase.Began) return;
+
+        Vector2 screenPos = touch.position;
+
+        if (EventSystem.current != null &&
+           EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            return;
+#else
+
+        
         if (!Input.GetMouseButtonDown(0))
             return;
+
+        Vector2 screenPos = Input.mousePosition;
+
+        if (EventSystem.current != null &&
+            EventSystem.current.IsPointerOverGameObject())
+            return;
+
+#endif
 
         if (rayCamera == null)
         {
