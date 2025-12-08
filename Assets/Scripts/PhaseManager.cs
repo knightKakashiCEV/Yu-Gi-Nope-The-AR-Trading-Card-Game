@@ -14,8 +14,8 @@ public enum Phase
 
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] Defense defensePanel;
-    [SerializeField] Attack attackPanel;
+    [SerializeField] private Defense defensePanel;
+    [SerializeField] private Attack attackPanel;
     [SerializeField] BattlePhase battlePhase;
 
     [Header("UI References")]

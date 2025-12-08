@@ -2,13 +2,19 @@
 
 public class Attack : MonoBehaviour
 {
-    [SerializeField] BattlePhase battlePhase;
+    [SerializeField] private BattlePhase battlePhase;
 
-    MonsterCard selected;
+    private MonsterCard selected;
 
-    public void SetSelected(MonsterCard m)
+    void Awake()
     {
-        // Re-click same monster → close panel
+        gameObject.SetActive(false);
+    }
+
+    // set the panel active
+    public void Open(MonsterCard m)
+    {
+        // Re-click mismo monstruo → cerrar
         if (gameObject.activeSelf && selected == m)
         {
             Cancel();
@@ -19,16 +25,16 @@ public class Attack : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void PressAttack()
+    // set the attacker as the current monster
+    public void OnAttackButton()
     {
         if (selected != null && battlePhase != null)
-        {
             battlePhase.SetAttacker(selected);
-        }
 
         Cancel();
     }
 
+    // cancel the attack
     public void Cancel()
     {
         selected = null;

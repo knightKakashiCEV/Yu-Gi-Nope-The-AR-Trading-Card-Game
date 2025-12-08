@@ -2,43 +2,57 @@ using UnityEngine;
 
 public class MonsterCard : MonoBehaviour
 {
-    [SerializeField] string monsterName;
-    [SerializeField] int attackPoints;
-    [SerializeField] int defensePoints;
+    [Header("Stats")]
+    [SerializeField] private string monsterName;
+    [SerializeField] private int attackPoints;
+    [SerializeField] private int defensePoints;
 
     bool isOnField;
     bool isInDefense;
-
     bool hasChangedPositionThisTurn;
     bool hasAttackedThisTurn;
+
     Animator animator;
 
     void Start()
     {
-        // Si el monstruo está activo en la escena, asumimos que está en el campo.
         isOnField = gameObject.activeSelf;
         isInDefense = false;
         hasChangedPositionThisTurn = false;
         hasAttackedThisTurn = false;
+
         animator = GetComponent<Animator>();
-    }
-    public void Idle() 
-    { 
-        animator.SetBool("Idle", true); 
-    }
-    public void Attack() 
-    { 
-        animator.SetBool("Attack", true); 
-    }
-    public void Defend() 
-    { 
-        animator.SetBool("Defense", true); 
-    }
-    public void Die() 
-    { 
-        animator.SetBool("Dead", true); 
+        PlayIdle();
     }
 
+    // Animation Controllers
+    public void PlayIdle()
+    {
+        if (animator == null) return;
+        animator.SetBool("Idle", true);
+        animator.SetBool("Attack", false);
+        animator.SetBool("Defense", false);
+        animator.SetBool("Dead", false);
+    }
+
+    public void PlayAttackAnim()
+    {
+        if (animator == null) return;
+        animator.SetBool("Attack", true);
+        animator.SetBool("Idle", false);
+    }
+
+    public void PlayDieAnim()
+    {
+        if (animator == null) return;
+        animator.SetBool("Dead", true);
+        animator.SetBool("Idle", false);
+        animator.SetBool("Attack", false);
+        animator.SetBool("Defense", false);
+    }
+
+
+    // Set the monster on the playing "field"
     public void SetOnField(bool active)
     {
         isOnField = active;
@@ -53,50 +67,60 @@ public class MonsterCard : MonoBehaviour
         }
     }
 
-    // --- Gestión de turno ---
-
+    // Return the respective flags of changed position and if it has attacked.
     public void ResetTurnFlags()
     {
         hasChangedPositionThisTurn = false;
         hasAttackedThisTurn = false;
     }
 
-    public bool CanChangePosition()
-    {
-        return isOnField && !hasChangedPositionThisTurn;
-    }
+    // Bools for checking if it can do various things such as change position, be the attacker or if it has attacked
 
+    public bool CanChangePosition() => isOnField && !hasChangedPositionThisTurn;
+    public bool CanReturnToAttack() => isOnField && isInDefense && !hasChangedPositionThisTurn;
+    public bool CanBeAttacker() => isOnField && !isInDefense && !hasAttackedThisTurn;
+
+    public void MarkAsAttacked() => hasAttackedThisTurn = true;
+
+
+    // Toggle the monster into defense as well as rotating it. (Here the rotation can be deleted once there's a proper animation)
     public void ToggleDefense()
     {
-        if (!CanChangePosition())
-            return;
+        if (!CanChangePosition()) return;
 
         isInDefense = !isInDefense;
         hasChangedPositionThisTurn = true;
 
-        // Rotación simple para indicar defensa (90º)
         if (isInDefense)
+        {
             transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            if (animator != null)
+            {
+                animator.SetBool("Defense", true);
+                animator.SetBool("Idle", false);
+            }
+        }
         else
+        {
             transform.rotation = Quaternion.identity;
+            PlayIdle();
+        }
     }
 
-    public bool CanBeAttacker()
+
+    // Change the monster back to Attack Position if it can.
+    public void ReturnToAttack()
     {
-        // Solo puede atacar si está en ataque, en campo y no ha atacado aún este turno
-        return isOnField && !isInDefense && !hasAttackedThisTurn;
-    }
+        if (!CanReturnToAttack()) return;
 
-    public void MarkAsAttacked()
-    {
-        hasAttackedThisTurn = true;
+        isInDefense = false;
+        hasChangedPositionThisTurn = true;
+        transform.rotation = Quaternion.identity;
+        PlayIdle();
     }
-
-    // --- Getters sencillos ---
 
     public int AttackPoints() => attackPoints;
     public int DefensePoints() => defensePoints;
-
     public bool IsDefense() => isInDefense;
     public bool IsOnField() => isOnField;
 }

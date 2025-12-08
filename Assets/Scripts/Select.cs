@@ -1,49 +1,73 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Select : MonoBehaviour
 {
-    [SerializeField] Defense defensePanel;
-    [SerializeField] PhaseManager phaseManager;
-    [SerializeField] BattlePhase battlePhase;
-    [SerializeField] Attack attackPanel;   // NUEVO
+    [SerializeField] private Camera rayCamera;
+    [SerializeField] private PhaseManager phaseManager;
+    [SerializeField] private BattlePhase battlePhase;
+    [SerializeField] private Defense defensePanel;
+    [SerializeField] private Attack attackPanel;
+
+    void Awake()
+    {
+        if (rayCamera == null)
+            rayCamera = Camera.main;
+    }
 
     void Update()
     {
+        // click or tap
         if (!Input.GetMouseButtonDown(0))
             return;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (rayCamera == null)
+        {
+            Debug.LogError("Select: rayCamera is null, assign ARCamera.");
+            return;
+        }
+
+        // grab the monster and handle respective to the phase
+        Ray ray = rayCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            MonsterCard m = hit.collider.GetComponent<MonsterCard>();
-            if (m == null) return;
+            MonsterCard m = hit.collider.GetComponentInParent<MonsterCard>();
+            if (m == null)
+                return;
 
-            // MAIN PHASE → defensa
+            if(m != null) Debug.Log($"Seleccionado: {m.name}");
+
             if (phaseManager.IsMainPhase())
             {
-                if (m.CanChangePosition())
-                    defensePanel.SetSelected(m);
+                HandleMainPhaseClick(m);
             }
-            // BATTLE PHASE → botón de Attack + selección de objetivo
             else if (phaseManager.IsBattlePhase())
             {
-                HandleBattleClick(m);
+                HandleBattlePhaseClick(m);
             }
         }
     }
 
-    void HandleBattleClick(MonsterCard m)
+    // Main phase to show defense/attack pos.
+    void HandleMainPhaseClick(MonsterCard m)
     {
-        // Si aún no hemos elegido atacante → mostrar botón de Attack
+        if (!m.CanChangePosition() && !m.CanReturnToAttack())
+            return;
+
+        defensePanel.Open(m);
+    }
+
+    // BattlePhase show Attack and choose attacker/target
+    void HandleBattlePhaseClick(MonsterCard m)
+    {
         if (!battlePhase.HasAttacker())
         {
-            if (m.CanBeAttacker())
-            {
-                attackPanel.SetSelected(m);
-            }
+            if (!m.CanBeAttacker())
+                return;
+
+            attackPanel.Open(m);
         }
-        // Si ya hay atacante → este click es el objetivo
         else
         {
             battlePhase.SelectTarget(m);

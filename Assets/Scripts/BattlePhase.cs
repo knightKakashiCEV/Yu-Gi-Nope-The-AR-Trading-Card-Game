@@ -37,11 +37,11 @@ public class BattlePhase : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(lookDir);
             attacker.transform.rotation = targetRot;
         }
-        attacker.Attack();
+        attacker.PlayAttackAnim();
 
         ResolveBattle(attacker, target);
 
-        attacker.Idle();
+        attacker.PlayIdle();
         attacker.MarkAsAttacked();
         attacker = null;
 
@@ -62,18 +62,14 @@ public class BattlePhase : MonoBehaviour
         {
             if (atkA > defVal)
             {
-                d.Die();
                 d.SetOnField(false);
             }
             else if (atkA < defVal)
             {
-                a.Die();
                 a.SetOnField(false);
             }
             else
             {
-                a.Die();
-                d.Die();
                 a.SetOnField(false);
                 d.SetOnField(false);
             }
@@ -84,7 +80,6 @@ public class BattlePhase : MonoBehaviour
         // ATK vs ATK → descrution + damage to the Opponent's LP
         if (atkA > atkD)
         {
-            d.Die();
             d.SetOnField(false);
 
             int damage = atkA - atkD;
@@ -93,7 +88,6 @@ public class BattlePhase : MonoBehaviour
         }
         else if (atkA < atkD)
         {
-            a.Die();
             a.SetOnField(false);
 
             int damage = atkD - atkA;
@@ -102,8 +96,6 @@ public class BattlePhase : MonoBehaviour
         }
         else
         {
-            d.Die();
-            a.Die();
             a.SetOnField(false);
             d.SetOnField(false);
         }
